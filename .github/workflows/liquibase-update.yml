@@ -1,0 +1,27 @@
+name: Liquibase MongoDB Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "changelog.main.xml"
+      - ".github/workflows/liquibase.yml"
+  workflow_dispatch: # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  update-database:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Dockerfile
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/liquibase/changelog \
+            liquibase-mongodb \
+            --url="${{ secrets.MONGO_URL }}" \
+            --changeLogFile=changelog.main.xml \
+            update
