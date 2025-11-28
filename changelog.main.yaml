@@ -1,0 +1,9 @@
+databaseChangelog:
+  - changeSet:
+      id: 1
+      author: juansecalvinio
+      changes:
+        - insert:
+            collectionName: example
+            documents:
+              - message: "Hello, World! From Liquibase"

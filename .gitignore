@@ -1,0 +1,13 @@
+# Environment variables
+.env
+
+# Liquibase local files
+*.tar.gz
+liquibase
+lib/
+internal/
+licenses/
+examples/
+
+# OS files
+.DS_Store

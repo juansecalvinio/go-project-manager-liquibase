@@ -1,0 +1,37 @@
+name: Liquibase MongoDB Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "changelog.main.yaml"
+      - ".github/workflows/liquibase.yml"
+  workflow_dispatch: # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  update-database:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download Liquibase
+        run: |
+          wget -q https://github.com/liquibase/liquibase/releases/download/v4.25.0/liquibase-4.25.0.tar.gz
+          tar -xzf liquibase-4.25.0.tar.gz
+          chmod +x liquibase
+
+      - name: Download MongoDB Extension
+        run: |
+          wget -q https://github.com/liquibase/liquibase-mongodb/releases/download/liquibase-mongodb-4.25.0/liquibase-mongodb-4.25.0.jar
+          mv liquibase-mongodb-4.25.0.jar lib/
+
+      - name: Run Liquibase Update
+        env:
+          MONGODB_USER: ${{ secrets.MONGODB_USER }}
+          MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+          MONGODB_HOST: ${{ secrets.MONGODB_HOST }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+        run: ./liquibase update
