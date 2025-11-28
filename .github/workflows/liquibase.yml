@@ -25,8 +25,8 @@ jobs:
 
       - name: Download MongoDB Extension
         run: |
-          wget -q https://github.com/liquibase/liquibase-mongodb/releases/download/liquibase-mongodb-4.25.0/liquibase-mongodb-4.25.0.jar
-          mv liquibase-mongodb-4.25.0.jar lib/
+          wget -q https://github.com/liquibase/liquibase-mongodb/releases/download/liquibase-mongodb-5.0.1/liquibase-mongodb-5.0.1.jar
+          mv liquibase-mongodb-5.0.1.jar lib/
 
       - name: Run Liquibase Update
         env:
